@@ -1,4 +1,4 @@
-import LibraryBrowser from "./components/LibraryBrowser";
+import LibraryBrowser from "../components/LibraryBrowser";
 
 export default function Home() {
   return (
