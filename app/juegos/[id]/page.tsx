@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import GameDetailSkeleton from "@/app/components/GameDetailSkeleton";
 import { GAMES } from "@/app/data/games";
 import { seededScores } from "@/app/data/scores";
 
@@ -9,9 +11,19 @@ export function generateStaticParams() {
   return GAMES.map((g) => ({ id: g.id }));
 }
 
-export default async function GameDetail({
+export default function GameDetail({ params }: PageProps<"/juegos/[id]">) {
+  return (
+    <Suspense fallback={<GameDetailSkeleton />}>
+      <GameDetailContent params={params} />
+    </Suspense>
+  );
+}
+
+async function GameDetailContent({
   params,
-}: PageProps<"/juegos/[id]">) {
+}: {
+  params: PageProps<"/juegos/[id]">["params"];
+}) {
   const { id } = await params;
   const game = GAMES.find((g) => g.id === id);
   if (!game) notFound();
