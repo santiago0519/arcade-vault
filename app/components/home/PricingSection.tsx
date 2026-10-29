@@ -5,7 +5,7 @@ export default function PricingSection() {
   return (
     <section className="home-section reveal">
       <div className="section-head">
-        <div className="kicker pixel neon-green">// 04</div>
+        <div className="kicker pixel neon-green">{"// 04"}</div>
         <h2 className="section-title">PRECIOS</h2>
         <div className="section-rule"></div>
       </div>

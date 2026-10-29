@@ -5,7 +5,7 @@ export default function WhySection() {
   return (
     <section className="home-section reveal">
       <div className="section-head">
-        <div className="kicker pixel neon-magenta">// 01</div>
+        <div className="kicker pixel neon-magenta">{"// 01"}</div>
         <h2 className="section-title">¿POR QUÉ ARCADE VAULT?</h2>
         <div className="section-rule"></div>
       </div>

@@ -4,6 +4,7 @@ import FinalCta from "./components/home/FinalCta";
 import FloatingSilhouettes from "./components/home/FloatingSilhouettes";
 import GamesPreview from "./components/home/GamesPreview";
 import PricingSection from "./components/home/PricingSection";
+import RevealOnScroll from "./components/home/RevealOnScroll";
 import StatsStrip from "./components/home/StatsStrip";
 import WhySection from "./components/home/WhySection";
 
@@ -47,6 +48,7 @@ export default function Home() {
       <ActivitySection />
       <PricingSection />
       <FinalCta />
+      <RevealOnScroll />
     </div>
   );
 }

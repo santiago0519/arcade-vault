@@ -7,7 +7,7 @@ export default function ActivitySection() {
   return (
     <section className="home-section reveal">
       <div className="section-head">
-        <div className="kicker pixel neon-yellow">// 03</div>
+        <div className="kicker pixel neon-yellow">{"// 03"}</div>
         <h2 className="section-title">ACTIVIDAD EN VIVO</h2>
         <div className="section-rule"></div>
       </div>
