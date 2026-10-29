@@ -1,6 +1,6 @@
 # SPEC 02 — Home (landing)
 
-> **Status:** Borrador
+> **Status:** Aprobado
 > **Depends on:** SPEC 01
 > **Date:** 2026-10-29
 > **Objective:** Implementar en Next.js la pantalla Home de `references/templates/home-about/` en la ruta `/`, mover la Biblioteca a `/juegos` y añadir "Inicio" a la navegación, solo en su parte visual y con datos ficticios.
