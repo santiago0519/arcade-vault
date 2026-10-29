@@ -1234,6 +1234,7 @@ a { color: inherit; text-decoration: none; }
 .skel-title { height: 28px; width: 60%; }
 .skel-tag { display: inline-block; width: 64px; height: 12px; }
 .skel-btn { height: 52px; width: 200px; max-width: 100%; }
+.skel-btn.sm { height: 38px; width: 84px; }
 .skel-head { padding: 14px 16px; border-bottom: 1px solid var(--line); }
 @media (prefers-reduced-motion: reduce) { .skel { animation: none; } }
 }
