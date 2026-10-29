@@ -1,6 +1,6 @@
 # SPEC 03 — Navegación instantánea en juegos y ajustes móviles
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 01, SPEC 02
 > **Date:** 2026-10-29
 > **Objective:** Hacer instantánea la navegación a `/juegos/[id]` y `/juegos/[id]/jugar` con `<Suspense>` y esqueletos, y eliminar el scroll horizontal entre 320 y 640 px en el Detalle, el Reproductor y el Salón.
@@ -100,21 +100,21 @@ Antes de empezar, leer `node_modules/next/dist/docs/01-app/02-guides/adopting-pa
 
 ## Acceptance criteria
 
-- [ ] `npm run lint` y `npm run build` terminan sin errores.
-- [ ] Con `next dev`, abrir `/juegos/caida` y `/juegos/caida/jugar` no muestra el aviso `instant-shell-url-data` en la terminal ni en el overlay.
-- [ ] `app/juegos/[id]/page.tsx` y `app/juegos/[id]/jugar/page.tsx` siguen exportando `ensureStatic = "navigation"` y `generateStaticParams()`.
-- [ ] Ninguna de las dos páginas lee `params` fuera de un `<Suspense>`.
-- [ ] `/juegos/caida` muestra el mismo detalle que antes: portada, etiquetas, descripción, botones y "MEJORES PUNTUACIONES".
-- [ ] `/juegos/caida/jugar` muestra el reproductor y SALIR lleva a `/juegos/caida`.
-- [ ] `/juegos/no-existe` y `/juegos/no-existe/jugar` muestran la página de no encontrado.
+- [x] `npm run lint` y `npm run build` terminan sin errores.
+- [x] Con `next dev`, abrir `/juegos/caida` y `/juegos/caida/jugar` no muestra el aviso `instant-shell-url-data` en la terminal ni en el overlay.
+- [x] `app/juegos/[id]/page.tsx` y `app/juegos/[id]/jugar/page.tsx` siguen exportando `ensureStatic = "navigation"` y `generateStaticParams()`.
+- [x] Ninguna de las dos páginas lee `params` fuera de un `<Suspense>`.
+- [x] `/juegos/caida` muestra el mismo detalle que antes: portada, etiquetas, descripción, botones y "MEJORES PUNTUACIONES".
+- [x] `/juegos/caida/jugar` muestra el reproductor y SALIR lleva a `/juegos/caida`.
+- [x] `/juegos/no-existe` y `/juegos/no-existe/jugar` muestran la página de no encontrado.
 - [ ] Los esqueletos no contienen `<h1>` y sus bloques tienen `aria-hidden="true"`.
-- [ ] Con `prefers-reduced-motion: reduce`, los esqueletos no animan.
-- [ ] Entre 320 y 640 px, `/juegos/caida`, `/juegos/caida/jugar` y `/salon` no producen scroll horizontal (`scrollWidth === innerWidth`).
-- [ ] `/`, `/juegos` y `/acceso` siguen sin scroll horizontal entre 320 y 640 px.
-- [ ] En ≤ 480 px, la tabla de `/salon` muestra RANGO, JUGADOR y PUNTUACIÓN, y no muestra FECHA.
-- [ ] En > 480 px, la tabla de `/salon` sigue mostrando las 4 columnas.
-- [ ] A 320 px, PAUSA, FIN y SALIR del reproductor son visibles y pulsables.
-- [ ] A 1440 px, el Detalle, el Reproductor y el Salón se ven igual que antes de esta spec.
+- [x] Con `prefers-reduced-motion: reduce`, los esqueletos no animan.
+- [x] Entre 320 y 640 px, `/juegos/caida`, `/juegos/caida/jugar` y `/salon` no producen scroll horizontal (`scrollWidth === innerWidth`).
+- [x] `/`, `/juegos` y `/acceso` siguen sin scroll horizontal entre 320 y 640 px.
+- [x] En ≤ 480 px, la tabla de `/salon` muestra RANGO, JUGADOR y PUNTUACIÓN, y no muestra FECHA.
+- [x] En > 480 px, la tabla de `/salon` sigue mostrando las 4 columnas.
+- [x] A 320 px, PAUSA, FIN y SALIR del reproductor son visibles y pulsables.
+- [x] A 1440 px, el Detalle, el Reproductor y el Salón se ven igual que antes de esta spec.
 
 ---
 
