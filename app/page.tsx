@@ -1,6 +1,10 @@
 import Link from "next/link";
+import ActivitySection from "./components/home/ActivitySection";
+import FinalCta from "./components/home/FinalCta";
 import FloatingSilhouettes from "./components/home/FloatingSilhouettes";
 import GamesPreview from "./components/home/GamesPreview";
+import PricingSection from "./components/home/PricingSection";
+import StatsStrip from "./components/home/StatsStrip";
 import WhySection from "./components/home/WhySection";
 
 export default function Home() {
@@ -39,6 +43,10 @@ export default function Home() {
 
       <WhySection />
       <GamesPreview />
+      <StatsStrip />
+      <ActivitySection />
+      <PricingSection />
+      <FinalCta />
     </div>
   );
 }
