@@ -1225,4 +1225,15 @@ a { color: inherit; text-decoration: none; }
 .faq-item:nth-child(3) { border-left-color: var(--yellow); }
 .faq-q { font-size: 10px; letter-spacing: 0.12em; color: var(--ink); margin-bottom: 8px; }
 .faq-a { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); line-height: 1.6; }
+
+/* ===== skeletons (carga de /juegos/[id]) ===== */
+.skel { background: var(--bg-3); animation: skel-pulse 1.4s steps(3) infinite; }
+@keyframes skel-pulse { 50% { opacity: 0.45; } }
+.skel-line { height: 10px; margin: 6px 0; }
+.skel-line.short { width: 40%; }
+.skel-title { height: 28px; width: 60%; }
+.skel-tag { display: inline-block; width: 64px; height: 12px; }
+.skel-btn { height: 52px; width: 200px; max-width: 100%; }
+.skel-head { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { .skel { animation: none; } }
 }
