@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer
@@ -11,7 +13,15 @@ export default function Footer() {
         letterSpacing: "0.16em",
       }}
     >
-      © 2026 ARCADE VAULT · HECHO CON PIXELES Y NEÓN · v2.6.0
+      <Link
+        href="/acerca-de"
+        style={{ color: "var(--ink-dim)", textDecoration: "underline" }}
+      >
+        ACERCA DE
+      </Link>
+      <div style={{ marginTop: 10 }}>
+        © 2026 ARCADE VAULT · HECHO CON PIXELES Y NEÓN · v2.6.0
+      </div>
     </footer>
   );
 }
