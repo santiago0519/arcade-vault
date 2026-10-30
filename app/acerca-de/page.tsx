@@ -1,3 +1,4 @@
+import ContactForm from "../components/about/ContactForm";
 import HighlightIcon, {
   type HighlightKind,
 } from "../components/about/HighlightIcon";
@@ -49,6 +50,10 @@ export default function AboutPage() {
         </div>
         <div className="div-bar"></div>
       </div>
+
+      <section className="about-contact reveal">
+        <ContactForm />
+      </section>
 
       <RevealOnScroll />
     </div>
