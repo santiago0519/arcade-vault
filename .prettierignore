@@ -1,0 +1,9 @@
+.next/
+out/
+build/
+node_modules/
+references/
+.playwright-screenshots/
+public
+package-lock.json
+*.lock
