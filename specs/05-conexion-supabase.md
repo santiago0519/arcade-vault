@@ -1,6 +1,6 @@
 # SPEC 05 — Conexión con Supabase (plomería)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** —
 > **Date:** 2026-11-03
 > **Objective:** Dejar instalados y configurados en `app/lib/supabase/` los clientes de Supabase para navegador y servidor (`@supabase/ssr`), con sus variables de entorno, sin que ninguna pantalla los use todavía.
