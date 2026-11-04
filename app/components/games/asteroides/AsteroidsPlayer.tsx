@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import { saveScore } from '@/app/lib/scores-storage';
 import {
   ASTEROIDS_HEIGHT,
   ASTEROIDS_WIDTH,
@@ -30,7 +31,11 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<AsteroidsEngine | null>(null);
   const [snap, setSnap] = useState<AsteroidsSnapshot>(INITIAL_SNAPSHOT);
-  const [name] = useState('INVITADO');
+  const [name, setName] = useState('INVITADO');
+  // Fin de partida: lo abre el motor (última vida perdida o end()) con la puntuación real.
+  const [over, setOver] = useState(false);
+  const [finalScore, setFinalScore] = useState(0);
+  const [saved, setSaved] = useState(false);
   // El motor se crea al montar y se destruye al desmontar (navegación, Strict Mode),
   // así no quedan listeners de window ni loops de requestAnimationFrame duplicados.
   useEffect(() => {
@@ -40,7 +45,11 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
       canvas,
       // El motor solo emite cuando cambia algún campo: no hay un render por frame.
       onChange: setSnap,
-      onGameOver: () => {},
+      onGameOver: (score) => {
+        setFinalScore(score);
+        setSaved(false);
+        setOver(true);
+      },
     });
     engineRef.current = engine;
     return () => {
@@ -69,6 +78,16 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
   const endGame = (e: MouseEvent<HTMLButtonElement>) => {
     blurTarget(e);
     engineRef.current?.end();
+  };
+  const save = () => {
+    saveScore({ game: 'asteroides', score: finalScore, name });
+    setSaved(true);
+  };
+  const playAgain = (e: MouseEvent<HTMLButtonElement>) => {
+    blurTarget(e);
+    setOver(false);
+    setSaved(false);
+    engineRef.current?.restart();
   };
   return (
     <div className="av-player fade-in">
@@ -157,6 +176,39 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
           <span>VECTOR · 800×600</span>
         </div>
       </div>
+      {over && (
+        <div className="modal-bd">
+          <div className="modal" role="dialog" aria-modal="true" aria-labelledby="asteroides-fin">
+            <h2 id="asteroides-fin">FIN DEL JUEGO</h2>
+            <div className="final-label">PUNTUACIÓN FINAL</div>
+            <div className="final">{finalScore.toLocaleString('es-ES')}</div>
+            {!saved ? (
+              <div className="input-row">
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value.toUpperCase().slice(0, 10))}
+                  placeholder="TUS INICIALES"
+                  aria-label="Tus iniciales"
+                  autoFocus
+                />
+                <button type="button" className="btn yellow" onClick={save}>
+                  GUARDAR PUNTUACIÓN
+                </button>
+              </div>
+            ) : (
+              <div className="toast-saved">▸ PUNTUACIÓN GUARDADA_</div>
+            )}
+            <div className="actions">
+              <button type="button" className="btn" onClick={playAgain}>
+                JUGAR DE NUEVO
+              </button>
+              <Link href="/juegos" className="btn magenta">
+                VOLVER AL VAULT
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
