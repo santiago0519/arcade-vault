@@ -1,6 +1,6 @@
 # SPEC 06 — Juego real de Asteroides
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 01, SPEC 03
 > **Date:** 2026-11-03
 > **Objective:** Portar a TypeScript el juego de `references/started-games/02-asteroids/` y jugarlo de verdad en `/juegos/asteroides/jugar`, como nueva entrada `asteroides` del catálogo, con HUD, pausa, fin de partida y guardado de puntuación de la plataforma.
