@@ -1,19 +1,18 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
-import { CATS, GAMES } from "@/app/data/games";
-import GameCard from "./GameCard";
+import { useMemo, useState } from 'react';
+import { CATS, GAMES } from '@/app/data/games';
+import GameCard from './GameCard';
 
 export default function LibraryBrowser() {
-  const [q, setQ] = useState("");
-  const [cat, setCat] = useState<(typeof CATS)[number]>("TODOS");
+  const [q, setQ] = useState('');
+  const [cat, setCat] = useState<(typeof CATS)[number]>('TODOS');
 
   const filtered = useMemo(
     () =>
       GAMES.filter(
         (g) =>
-          (cat === "TODOS" || g.cat === cat) &&
-          g.title.toLowerCase().includes(q.toLowerCase()),
+          (cat === 'TODOS' || g.cat === cat) && g.title.toLowerCase().includes(q.toLowerCase()),
       ),
     [q, cat],
   );
@@ -34,7 +33,7 @@ export default function LibraryBrowser() {
             <button
               key={c}
               type="button"
-              className={"chip" + (cat === c ? " active" : "")}
+              className={'chip' + (cat === c ? ' active' : '')}
               onClick={() => setCat(c)}
             >
               {c}
@@ -50,15 +49,15 @@ export default function LibraryBrowser() {
         {filtered.length === 0 && (
           <div
             style={{
-              gridColumn: "1 / -1",
-              textAlign: "center",
+              gridColumn: '1 / -1',
+              textAlign: 'center',
               padding: 80,
-              color: "var(--ink-faint)",
+              color: 'var(--ink-faint)',
             }}
           >
             <div
               className="pixel"
-              style={{ fontSize: 14, color: "var(--magenta)", marginBottom: 12 }}
+              style={{ fontSize: 14, color: 'var(--magenta)', marginBottom: 12 }}
             >
               NO HAY RESULTADOS
             </div>

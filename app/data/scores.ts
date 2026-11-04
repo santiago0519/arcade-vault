@@ -1,4 +1,4 @@
-import { PLAYERS } from "./games";
+import { PLAYERS } from './games';
 
 export interface ScoreRow {
   rank: number;
@@ -20,8 +20,8 @@ export function seededScores(seed: number, count = 12): ScoreRow[] {
     used.add(name);
     const base = Math.floor(50000 + rand() * 250000);
     const score = base - i * Math.floor(2000 + rand() * 4000);
-    const day = String(1 + Math.floor(rand() * 28)).padStart(2, "0");
-    const mon = String(1 + Math.floor(rand() * 12)).padStart(2, "0");
+    const day = String(1 + Math.floor(rand() * 28)).padStart(2, '0');
+    const mon = String(1 + Math.floor(rand() * 12)).padStart(2, '0');
     rows.push({
       rank: i + 1,
       name,
@@ -29,7 +29,5 @@ export function seededScores(seed: number, count = 12): ScoreRow[] {
       date: `${day}/${mon}/2026`,
     });
   }
-  return rows
-    .sort((a, b) => b.score - a.score)
-    .map((r, i) => ({ ...r, rank: i + 1 }));
+  return rows.sort((a, b) => b.score - a.score).map((r, i) => ({ ...r, rank: i + 1 }));
 }

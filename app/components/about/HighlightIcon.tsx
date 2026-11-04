@@ -1,9 +1,9 @@
-export type HighlightKind = "HEART" | "BROWSER" | "PLANT";
+export type HighlightKind = 'HEART' | 'BROWSER' | 'PLANT';
 
 export default function HighlightIcon({ kind }: { kind: HighlightKind }) {
-  const C = "currentColor";
+  const C = 'currentColor';
 
-  if (kind === "HEART")
+  if (kind === 'HEART')
     return (
       <svg className="hl-icon" viewBox="0 0 16 16" aria-hidden="true">
         <g fill={C}>
@@ -22,7 +22,7 @@ export default function HighlightIcon({ kind }: { kind: HighlightKind }) {
       </svg>
     );
 
-  if (kind === "BROWSER")
+  if (kind === 'BROWSER')
     return (
       <svg className="hl-icon" viewBox="0 0 16 16" aria-hidden="true">
         <g fill={C}>

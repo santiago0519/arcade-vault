@@ -52,13 +52,13 @@ Los datos nuevos viven en `app/data/home.ts` y son mock tipado. Los juegos del m
 
 ```ts
 // app/data/home.ts
-import type { GameColor } from "./games";
+import type { GameColor } from './games';
 
-export type FeatureIconKind = "GAMEPAD" | "FREE" | "TROPHY" | "ROCKET";
+export type FeatureIconKind = 'GAMEPAD' | 'FREE' | 'TROPHY' | 'ROCKET';
 
 export interface Feature {
   icon: FeatureIconKind;
-  title: string;   // "JUEGOS CLÁSICOS"
+  title: string; // "JUEGOS CLÁSICOS"
   desc: string;
   color: GameColor; // clase de color de la tarjeta
 }
@@ -71,9 +71,9 @@ export interface HomeStat {
 
 export interface RecentScore {
   player: string;
-  game: string;     // nombre visible, no id
+  game: string; // nombre visible, no id
   score: number;
-  ago: string;      // "hace 2 min"
+  ago: string; // "hace 2 min"
   color: GameColor;
 }
 
@@ -88,31 +88,31 @@ export interface FaqItem {
   a: string;
 }
 
-export const FEATURES: Feature[];            // 4
-export const HOME_STATS: HomeStat[];         // 3
-export const RECENT_SCORES: RecentScore[];   // 7
-export const TOP_PLAYERS: TopPlayer[];       // 5
-export const PLAN_FEATURES: string[];        // 6 ítems de la lista de precios
-export const FAQ: FaqItem[];                 // 3
+export const FEATURES: Feature[]; // 4
+export const HOME_STATS: HomeStat[]; // 3
+export const RECENT_SCORES: RecentScore[]; // 7
+export const TOP_PLAYERS: TopPlayer[]; // 5
+export const PLAN_FEATURES: string[]; // 6 ítems de la lista de precios
+export const FAQ: FaqItem[]; // 3
 ```
 
 Rutas:
 
-| Pantalla   | Ruta            | Cambio                                                  |
-| ---------- | --------------- | ------------------------------------------------------- |
-| Home       | `/`             | Nueva. Server; solo el revelado al scroll es cliente    |
-| Biblioteca | `/juegos`       | Movida desde `/`. Mismo componente `LibraryBrowser`     |
-| Detalle    | `/juegos/[id]`  | Sin cambios de ruta; "VOLVER AL VAULT" apunta a `/juegos` |
+| Pantalla   | Ruta           | Cambio                                                    |
+| ---------- | -------------- | --------------------------------------------------------- |
+| Home       | `/`            | Nueva. Server; solo el revelado al scroll es cliente      |
+| Biblioteca | `/juegos`      | Movida desde `/`. Mismo componente `LibraryBrowser`       |
+| Detalle    | `/juegos/[id]` | Sin cambios de ruta; "VOLVER AL VAULT" apunta a `/juegos` |
 
 Mapa de enlaces del Home:
 
-| Elemento                               | Destino          |
-| -------------------------------------- | ---------------- |
-| Logo de la nav, enlace "Inicio"        | `/`              |
-| EXPLORAR JUEGOS, VER TODOS LOS JUEGOS, INSERTAR MONEDA | `/juegos` |
-| CREAR CUENTA, EMPEZAR GRATIS           | `/acceso`        |
-| `mini-card`                            | `/juegos/[id]`   |
-| VER SALÓN                              | `/salon`         |
+| Elemento                                               | Destino        |
+| ------------------------------------------------------ | -------------- |
+| Logo de la nav, enlace "Inicio"                        | `/`            |
+| EXPLORAR JUEGOS, VER TODOS LOS JUEGOS, INSERTAR MONEDA | `/juegos`      |
+| CREAR CUENTA, EMPEZAR GRATIS                           | `/acceso`      |
+| `mini-card`                                            | `/juegos/[id]` |
+| VER SALÓN                                              | `/salon`       |
 
 Convenciones:
 
@@ -184,14 +184,14 @@ Antes de empezar, leer `node_modules/next/dist/docs/` (`01-app`) sobre `cacheCom
 
 ## Risks
 
-| Riesgo                                                                                       | Mitigación                                                                                                    |
-| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Quedan enlaces a `/` que querían decir "Biblioteca" y mandan al Home.                         | El paso 1 los lista y los cambia; el criterio de aceptación los verifica uno por uno.                         |
-| Marcadores externos o enlaces guardados a `/` esperan la Biblioteca.                          | Aceptado: es un MVP sin usuarios; no se añade redirección.                                                    |
-| Contenido `.reveal` oculto si el JavaScript falla o `IntersectionObserver` no existe.         | Mostrar todo si no existe `IntersectionObserver` y con `prefers-reduced-motion`.                              |
-| Clases portadas colisionan con las existentes de la SPEC 01 (`section-title`, `btn`, etc.).   | El paso 4 comprueba nombres antes de portar y no sobrescribe; el paso 4 verifica que las pantallas no cambian. |
-| Animaciones de las siluetas flotantes pesan en móvil.                                         | Usar solo `transform`/`opacity` como en la plantilla y ocultar siluetas sobrantes en ≤ 640 px si hay jank.     |
-| Hidratación: `toLocaleString("es-ES")` difiere entre servidor y cliente.                      | Todo el Home se renderiza en servidor; los números no se recalculan en cliente.                               |
+| Riesgo                                                                                      | Mitigación                                                                                                     |
+| ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Quedan enlaces a `/` que querían decir "Biblioteca" y mandan al Home.                       | El paso 1 los lista y los cambia; el criterio de aceptación los verifica uno por uno.                          |
+| Marcadores externos o enlaces guardados a `/` esperan la Biblioteca.                        | Aceptado: es un MVP sin usuarios; no se añade redirección.                                                     |
+| Contenido `.reveal` oculto si el JavaScript falla o `IntersectionObserver` no existe.       | Mostrar todo si no existe `IntersectionObserver` y con `prefers-reduced-motion`.                               |
+| Clases portadas colisionan con las existentes de la SPEC 01 (`section-title`, `btn`, etc.). | El paso 4 comprueba nombres antes de portar y no sobrescribe; el paso 4 verifica que las pantallas no cambian. |
+| Animaciones de las siluetas flotantes pesan en móvil.                                       | Usar solo `transform`/`opacity` como en la plantilla y ocultar siluetas sobrantes en ≤ 640 px si hay jank.     |
+| Hidratación: `toLocaleString("es-ES")` difiere entre servidor y cliente.                    | Todo el Home se renderiza en servidor; los números no se recalculan en cliente.                                |
 
 ---
 

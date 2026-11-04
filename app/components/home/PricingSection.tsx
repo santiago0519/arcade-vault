@@ -1,11 +1,11 @@
-import Link from "next/link";
-import { FAQ, PLAN_FEATURES } from "@/app/data/home";
+import Link from 'next/link';
+import { FAQ, PLAN_FEATURES } from '@/app/data/home';
 
 export default function PricingSection() {
   return (
     <section className="home-section reveal">
       <div className="section-head">
-        <div className="kicker pixel neon-green">{"// 04"}</div>
+        <div className="kicker pixel neon-green">{'// 04'}</div>
         <h2 className="section-title">PRECIOS</h2>
         <div className="section-rule"></div>
       </div>
@@ -23,7 +23,7 @@ export default function PricingSection() {
               <li key={item}>✔ {item}</li>
             ))}
           </ul>
-          <Link href="/acceso" className="btn xl pulse" style={{ width: "100%" }}>
+          <Link href="/acceso" className="btn xl pulse" style={{ width: '100%' }}>
             EMPEZAR GRATIS →
           </Link>
           <div className="pc-foot">No pedimos tarjeta. Nunca lo haremos.</div>

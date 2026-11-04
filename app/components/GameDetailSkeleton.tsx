@@ -18,9 +18,15 @@ export default function GameDetailSkeleton() {
             <div className="skel skel-line short"></div>
           </div>
           <div className="stat-strip">
-            <div><div className="skel skel-line"></div></div>
-            <div><div className="skel skel-line"></div></div>
-            <div><div className="skel skel-line"></div></div>
+            <div>
+              <div className="skel skel-line"></div>
+            </div>
+            <div>
+              <div className="skel skel-line"></div>
+            </div>
+            <div>
+              <div className="skel skel-line"></div>
+            </div>
           </div>
           <div className="detail-actions">
             <div className="skel skel-btn"></div>

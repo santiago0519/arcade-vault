@@ -1,17 +1,17 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
-import GameDetailSkeleton from "@/app/components/GameDetailSkeleton";
-import { GAMES } from "@/app/data/games";
-import { seededScores } from "@/app/data/scores";
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+import GameDetailSkeleton from '@/app/components/GameDetailSkeleton';
+import { GAMES } from '@/app/data/games';
+import { seededScores } from '@/app/data/scores';
 
-export const ensureStatic = "navigation";
+export const ensureStatic = 'navigation';
 
 export function generateStaticParams() {
   return GAMES.map((g) => ({ id: g.id }));
 }
 
-export default function GameDetail({ params }: PageProps<"/juegos/[id]">) {
+export default function GameDetail({ params }: PageProps<'/juegos/[id]'>) {
   return (
     <Suspense fallback={<GameDetailSkeleton />}>
       <GameDetailContent params={params} />
@@ -19,11 +19,7 @@ export default function GameDetail({ params }: PageProps<"/juegos/[id]">) {
   );
 }
 
-async function GameDetailContent({
-  params,
-}: {
-  params: PageProps<"/juegos/[id]">["params"];
-}) {
+async function GameDetailContent({ params }: { params: PageProps<'/juegos/[id]'>['params'] }) {
   const { id } = await params;
   const game = GAMES.find((g) => g.id === id);
   if (!game) notFound();
@@ -34,7 +30,7 @@ async function GameDetailContent({
     <div className="av-detail fade-in">
       <div>
         <div className="detail-cover">
-          <div className={"cover-bg " + game.cover}></div>
+          <div className={'cover-bg ' + game.cover}></div>
         </div>
         <div style={{ marginTop: 20 }} className="detail-info">
           <div className="detail-tags">
@@ -55,11 +51,11 @@ async function GameDetailContent({
               <div
                 className="v"
                 style={{
-                  color: "var(--magenta)",
-                  textShadow: "0 0 6px rgba(255,0,110,0.5)",
+                  color: 'var(--magenta)',
+                  textShadow: '0 0 6px rgba(255,0,110,0.5)',
                 }}
               >
-                {game.best.toLocaleString("es-ES")}
+                {game.best.toLocaleString('es-ES')}
               </div>
             </div>
             <div>
@@ -67,8 +63,8 @@ async function GameDetailContent({
               <div
                 className="v"
                 style={{
-                  color: "var(--yellow)",
-                  textShadow: "0 0 6px rgba(245,255,0,0.5)",
+                  color: 'var(--yellow)',
+                  textShadow: '0 0 6px rgba(245,255,0,0.5)',
                 }}
               >
                 ★ ★ ★ ☆ ☆
@@ -93,24 +89,23 @@ async function GameDetailContent({
             <div
               key={r.name}
               className={
-                "lb-row" +
-                (i === 0 ? " top1" : i === 1 ? " top2" : i === 2 ? " top3" : "")
+                'lb-row' + (i === 0 ? ' top1' : i === 1 ? ' top2' : i === 2 ? ' top3' : '')
               }
             >
-              <div className="rk">#{String(r.rank).padStart(2, "0")}</div>
+              <div className="rk">#{String(r.rank).padStart(2, '0')}</div>
               <div className="pl">
                 {r.name}
                 <div
                   style={{
                     fontSize: 10,
-                    color: "var(--ink-faint)",
-                    letterSpacing: "0.1em",
+                    color: 'var(--ink-faint)',
+                    letterSpacing: '0.1em',
                   }}
                 >
                   {r.date}
                 </div>
               </div>
-              <div className="sc">{r.score.toLocaleString("es-ES")}</div>
+              <div className="sc">{r.score.toLocaleString('es-ES')}</div>
             </div>
           ))}
         </div>

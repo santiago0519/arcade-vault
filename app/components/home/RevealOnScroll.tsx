@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 // Añade "in" a cada .reveal al entrar en pantalla; sin IntersectionObserver
 // o con movimiento reducido, lo muestra todo de inmediato
 export default function RevealOnScroll() {
   useEffect(() => {
-    const els = document.querySelectorAll<HTMLElement>(".reveal");
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const els = document.querySelectorAll<HTMLElement>('.reveal');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (reduced || !("IntersectionObserver" in window)) {
-      els.forEach((el) => el.classList.add("in"));
+    if (reduced || !('IntersectionObserver' in window)) {
+      els.forEach((el) => el.classList.add('in'));
       return;
     }
 
@@ -18,7 +18,7 @@ export default function RevealOnScroll() {
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            e.target.classList.add("in");
+            e.target.classList.add('in');
             io.unobserve(e.target);
           }
         });
