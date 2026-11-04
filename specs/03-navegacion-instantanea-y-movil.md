@@ -13,11 +13,11 @@ Con `cacheComponents` y `partialPrefetching` activos, `next dev` avisa en `/jueg
 
 Durante el paso 10 de la SPEC 02 se corrigió el desborde de la `Nav` en móvil. Al quitarlo aparecieron desbordes propios de pantallas de la SPEC 01, que la SPEC 02 dejó fuera de alcance:
 
-| Ruta                  | 320 px | 360 px | 390 px | Causa                                                              |
-| --------------------- | ------ | ------ | ------ | ------------------------------------------------------------------ |
-| `/juegos/[id]`        | +50    | +10    | 0      | `.av-detail` usa `1fr` en ≤ 900 px y no encoge bajo su contenido.   |
-| `/juegos/[id]/jugar`  | +12    | 0      | 0      | `.hud-actions` (PAUSA · FIN · SALIR) no cabe en una línea.          |
-| `/salon`              | +73    | +33    | +3     | `.hall-table` tiene 4 columnas fijas que no caben.                  |
+| Ruta                 | 320 px | 360 px | 390 px | Causa                                                             |
+| -------------------- | ------ | ------ | ------ | ----------------------------------------------------------------- |
+| `/juegos/[id]`       | +50    | +10    | 0      | `.av-detail` usa `1fr` en ≤ 900 px y no encoge bajo su contenido. |
+| `/juegos/[id]/jugar` | +12    | 0      | 0      | `.hud-actions` (PAUSA · FIN · SALIR) no cabe en una línea.        |
+| `/salon`             | +73    | +33    | +3     | `.hall-table` tiene 4 columnas fijas que no caben.                |
 
 ---
 
@@ -66,7 +66,7 @@ export default function PlayerSkeleton(): JSX.Element;
 Patrón de página (ilustrativo):
 
 ```tsx
-export default function GameDetail({ params }: PageProps<"/juegos/[id]">) {
+export default function GameDetail({ params }: PageProps<'/juegos/[id]'>) {
   return (
     <Suspense fallback={<GameDetailSkeleton />}>
       <GameDetailContent params={params} />
@@ -140,14 +140,14 @@ Antes de empezar, leer `node_modules/next/dist/docs/01-app/02-guides/adopting-pa
 
 ## Risks
 
-| Riesgo                                                                                       | Mitigación                                                                                                        |
-| -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `notFound()` dentro de `<Suspense>` puede responder HTTP 200 al hacer streaming.             | El criterio exige la UI de no encontrado; el código HTTP queda fuera de alcance y se anota si se necesita.        |
-| `ensureStatic = "navigation"` rechaza el build si algo del contenido deja de ser estático.   | El contenido solo lee `GAMES` y datos sembrados; el paso 2 y el 3 ejecutan `npm run build`.                        |
-| El esqueleto no coincide en tamaño con el contenido y el layout salta.                        | Reutiliza las clases contenedoras de cada pantalla (`av-detail`, `detail-cover`, `crt`, `crt-screen`).             |
-| Ocultar FECHA rompe la alineación de la cabecera con las filas.                               | Se ocultan a la vez la cuarta celda de `.th` y `.dt`, y ambas usan la misma rejilla de 3 columnas.                 |
-| El aviso no aparece en producción, así que un fallo no se ve en `next start`.                 | La verificación se hace con `next dev`, que es donde corre la validación.                                         |
-| El `next dev` del usuario no recarga `globals.css` (visto en la SPEC 02).                     | Reiniciar `npm run dev` antes de validar los cambios de CSS.                                                      |
+| Riesgo                                                                                     | Mitigación                                                                                                 |
+| ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| `notFound()` dentro de `<Suspense>` puede responder HTTP 200 al hacer streaming.           | El criterio exige la UI de no encontrado; el código HTTP queda fuera de alcance y se anota si se necesita. |
+| `ensureStatic = "navigation"` rechaza el build si algo del contenido deja de ser estático. | El contenido solo lee `GAMES` y datos sembrados; el paso 2 y el 3 ejecutan `npm run build`.                |
+| El esqueleto no coincide en tamaño con el contenido y el layout salta.                     | Reutiliza las clases contenedoras de cada pantalla (`av-detail`, `detail-cover`, `crt`, `crt-screen`).     |
+| Ocultar FECHA rompe la alineación de la cabecera con las filas.                            | Se ocultan a la vez la cuarta celda de `.th` y `.dt`, y ambas usan la misma rejilla de 3 columnas.         |
+| El aviso no aparece en producción, así que un fallo no se ve en `next start`.              | La verificación se hace con `next dev`, que es donde corre la validación.                                  |
+| El `next dev` del usuario no recarga `globals.css` (visto en la SPEC 02).                  | Reiniciar `npm run dev` antes de validar los cambios de CSS.                                               |
 
 ---
 

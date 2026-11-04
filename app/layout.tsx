@@ -1,38 +1,34 @@
-import type { Metadata } from "next";
-import { Courier_Prime, JetBrains_Mono, Press_Start_2P } from "next/font/google";
-import "./globals.css";
-import Footer from "./components/Footer";
-import Nav from "./components/Nav";
+import type { Metadata } from 'next';
+import { Courier_Prime, JetBrains_Mono, Press_Start_2P } from 'next/font/google';
+import './globals.css';
+import Footer from './components/Footer';
+import Nav from './components/Nav';
 
 const pressStart = Press_Start_2P({
-  variable: "--font-press-start",
-  weight: "400",
-  subsets: ["latin"],
+  variable: '--font-press-start',
+  weight: '400',
+  subsets: ['latin'],
 });
 
 const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
+  variable: '--font-jetbrains',
+  subsets: ['latin'],
 });
 
 const courier = Courier_Prime({
-  variable: "--font-courier",
-  weight: ["400", "700"],
-  subsets: ["latin"],
+  variable: '--font-courier',
+  weight: ['400', '700'],
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Arcade Vault · Portal Retro",
-  description:
-    "Juega a clásicos arcade en línea y compite por el puntaje más alto.",
+  title: 'Arcade Vault · Portal Retro',
+  description: 'Juega a clásicos arcade en línea y compite por el puntaje más alto.',
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html
-      lang="es"
-      className={`${pressStart.variable} ${jetbrains.variable} ${courier.variable}`}
-    >
+    <html lang="es" className={`${pressStart.variable} ${jetbrains.variable} ${courier.variable}`}>
       <body>
         <div className="av-bg" />
         <div className="av-noise" />

@@ -1,5 +1,5 @@
-import Link from "next/link";
-import HallTabs from "../components/HallTabs";
+import Link from 'next/link';
+import HallTabs from '../components/HallTabs';
 
 export default function HallOfFame() {
   return (
@@ -13,7 +13,7 @@ export default function HallOfFame() {
 
       <HallTabs />
 
-      <div style={{ textAlign: "center", marginTop: 32 }}>
+      <div style={{ textAlign: 'center', marginTop: 32 }}>
         <Link href="/juegos" className="btn lg">
           VOLVER A LA BIBLIOTECA
         </Link>

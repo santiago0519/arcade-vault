@@ -1,4 +1,4 @@
-import AuthForm from "../components/AuthForm";
+import AuthForm from '../components/AuthForm';
 
 export default function Auth() {
   return (
@@ -11,8 +11,8 @@ export default function Auth() {
             className="mono"
             style={{
               fontSize: 11,
-              color: "var(--ink-faint)",
-              letterSpacing: "0.16em",
+              color: 'var(--ink-faint)',
+              letterSpacing: '0.16em',
               marginTop: 6,
             }}
           >

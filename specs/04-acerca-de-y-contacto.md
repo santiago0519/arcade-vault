@@ -70,7 +70,7 @@ export interface ContactPayload {
   website?: string; // honeypot, debe llegar vacío
 }
 
-export type ContactErrors = Partial<Record<"name" | "email" | "message", string>>;
+export type ContactErrors = Partial<Record<'name' | 'email' | 'message', string>>;
 
 export function validateContact(input: unknown): {
   ok: boolean;
@@ -79,18 +79,16 @@ export function validateContact(input: unknown): {
 };
 
 // Respuesta de POST /api/contact
-export type ContactResponse =
-  | { ok: true }
-  | { ok: false; error: string; fields?: ContactErrors };
+export type ContactResponse = { ok: true } | { ok: false; error: string; fields?: ContactErrors };
 ```
 
 Variables de entorno:
 
-| Variable             | Obligatoria | Valor                                                             |
-| -------------------- | ----------- | ----------------------------------------------------------------- |
-| `RESEND_API_KEY`     | Sí          | La asigna el usuario después. Sin ella la ruta responde `502`.    |
-| `CONTACT_TO_EMAIL`   | Sí          | `edissoncode@gmail.com`                                           |
-| `CONTACT_FROM_EMAIL` | No          | Por defecto `ARCADE VAULT <onboarding@resend.dev>` (sandbox).     |
+| Variable             | Obligatoria | Valor                                                          |
+| -------------------- | ----------- | -------------------------------------------------------------- |
+| `RESEND_API_KEY`     | Sí          | La asigna el usuario después. Sin ella la ruta responde `502`. |
+| `CONTACT_TO_EMAIL`   | Sí          | `edissoncode@gmail.com`                                        |
+| `CONTACT_FROM_EMAIL` | No          | Por defecto `ARCADE VAULT <onboarding@resend.dev>` (sandbox).  |
 
 Correo enviado:
 
@@ -102,10 +100,10 @@ Correo enviado:
 
 Rutas:
 
-| Pantalla  | Ruta            | Cambio                                                       |
-| --------- | --------------- | ------------------------------------------------------------ |
-| Acerca de | `/acerca-de`    | Nueva. Server; `ContactForm` y `RevealOnScroll` son clientes |
-| Contacto  | `/api/contact`  | Nueva. Route Handler `POST`                                  |
+| Pantalla  | Ruta           | Cambio                                                       |
+| --------- | -------------- | ------------------------------------------------------------ |
+| Acerca de | `/acerca-de`   | Nueva. Server; `ContactForm` y `RevealOnScroll` son clientes |
+| Contacto  | `/api/contact` | Nueva. Route Handler `POST`                                  |
 
 Convenciones:
 
@@ -182,16 +180,16 @@ Antes de empezar, leer en `node_modules/next/dist/docs/01-app/`: `route.md` (Rou
 
 ## Risks
 
-| Riesgo                                                                                                   | Mitigación                                                                                                                                |
-| -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| El remitente sandbox `onboarding@resend.dev` solo entrega al correo dueño de la cuenta de Resend.         | Si `edissoncode@gmail.com` no es el correo de la cuenta, Resend rechaza el envío y el formulario muestra el error. Solución: verificar un dominio y fijar `CONTACT_FROM_EMAIL`. |
-| `.env*` está ignorado en `.gitignore` y `.env.example` no se versionaría.                                  | El paso 1 añade `!.env.example` y comprueba con `git status`.                                                                             |
-| La clave de Resend se filtra al cliente o al repositorio.                                                 | Solo se lee en `route.ts`, sin prefijo `NEXT_PUBLIC_`; `.env.local` está ignorado; el criterio exige comprobarlo.                          |
-| El usuario no ha asignado `RESEND_API_KEY` al terminar la implementación.                                  | La ruta responde `502` con mensaje claro y el formulario lo muestra. La prueba de entrega real queda pendiente hasta que exista la clave. |
-| Bots rellenan el formulario y gastan la cuota de Resend.                                                   | Honeypot y límites de longitud. El rate limit queda fuera de alcance y se anota para otra spec.                                           |
-| `POST` en una ruta con `cacheComponents` activo se comporta distinto a lo esperado.                        | El paso 3 lo comprueba con `next dev` y `next build`; los Route Handlers `POST` no se cachean.                                            |
-| Clases portadas colisionan con las existentes (`field`, `shake`, `dot`, `line`, `prompt`).                | El paso 4 comprueba nombres antes de portar y no sobrescribe; verifica que las pantallas anteriores no cambian.                            |
-| Inyección de cabeceras o contenido por el nombre o el mensaje.                                             | El SDK recibe `subject` y `text` como campos, no como cabeceras en bruto; el nombre se recorta y no admite saltos de línea.                |
+| Riesgo                                                                                            | Mitigación                                                                                                                                                                      |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| El remitente sandbox `onboarding@resend.dev` solo entrega al correo dueño de la cuenta de Resend. | Si `edissoncode@gmail.com` no es el correo de la cuenta, Resend rechaza el envío y el formulario muestra el error. Solución: verificar un dominio y fijar `CONTACT_FROM_EMAIL`. |
+| `.env*` está ignorado en `.gitignore` y `.env.example` no se versionaría.                         | El paso 1 añade `!.env.example` y comprueba con `git status`.                                                                                                                   |
+| La clave de Resend se filtra al cliente o al repositorio.                                         | Solo se lee en `route.ts`, sin prefijo `NEXT_PUBLIC_`; `.env.local` está ignorado; el criterio exige comprobarlo.                                                               |
+| El usuario no ha asignado `RESEND_API_KEY` al terminar la implementación.                         | La ruta responde `502` con mensaje claro y el formulario lo muestra. La prueba de entrega real queda pendiente hasta que exista la clave.                                       |
+| Bots rellenan el formulario y gastan la cuota de Resend.                                          | Honeypot y límites de longitud. El rate limit queda fuera de alcance y se anota para otra spec.                                                                                 |
+| `POST` en una ruta con `cacheComponents` activo se comporta distinto a lo esperado.               | El paso 3 lo comprueba con `next dev` y `next build`; los Route Handlers `POST` no se cachean.                                                                                  |
+| Clases portadas colisionan con las existentes (`field`, `shake`, `dot`, `line`, `prompt`).        | El paso 4 comprueba nombres antes de portar y no sobrescribe; verifica que las pantallas anteriores no cambian.                                                                 |
+| Inyección de cabeceras o contenido por el nombre o el mensaje.                                    | El SDK recibe `subject` y `text` como campos, no como cabeceras en bruto; el nombre se recorta y no admite saltos de línea.                                                     |
 
 ---
 

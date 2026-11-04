@@ -1,35 +1,27 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function AuthForm() {
   const router = useRouter();
-  const [tab, setTab] = useState<"in" | "up">("in");
-  const [user, setUser] = useState("");
-  const [pass, setPass] = useState("");
-  const [email, setEmail] = useState("");
+  const [tab, setTab] = useState<'in' | 'up'>('in');
+  const [user, setUser] = useState('');
+  const [pass, setPass] = useState('');
+  const [email, setEmail] = useState('');
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/juegos");
+    router.push('/juegos');
   };
 
   return (
     <>
       <div className="auth-tabs">
-        <button
-          type="button"
-          className={tab === "in" ? "on" : ""}
-          onClick={() => setTab("in")}
-        >
+        <button type="button" className={tab === 'in' ? 'on' : ''} onClick={() => setTab('in')}>
           INICIAR SESIÓN
         </button>
-        <button
-          type="button"
-          className={tab === "up" ? "on" : ""}
-          onClick={() => setTab("up")}
-        >
+        <button type="button" className={tab === 'up' ? 'on' : ''} onClick={() => setTab('up')}>
           CREAR CUENTA
         </button>
       </div>
@@ -37,13 +29,9 @@ export default function AuthForm() {
       <form onSubmit={submit}>
         <div className="field">
           <label>Usuario</label>
-          <input
-            value={user}
-            onChange={(e) => setUser(e.target.value)}
-            placeholder="px_kai"
-          />
+          <input value={user} onChange={(e) => setUser(e.target.value)} placeholder="px_kai" />
         </div>
-        {tab === "up" && (
+        {tab === 'up' && (
           <div className="field slide-in">
             <label>Correo electrónico</label>
             <input
@@ -64,20 +52,16 @@ export default function AuthForm() {
           />
         </div>
 
-        <button
-          className="btn lg"
-          type="submit"
-          style={{ width: "100%", marginTop: 8 }}
-        >
-          {tab === "in" ? "ENTRAR AL VAULT" : "CREAR Y JUGAR"}
+        <button className="btn lg" type="submit" style={{ width: '100%', marginTop: 8 }}>
+          {tab === 'in' ? 'ENTRAR AL VAULT' : 'CREAR Y JUGAR'}
         </button>
       </form>
 
       <button
         type="button"
         className="btn ghost"
-        style={{ width: "100%", marginTop: 10 }}
-        onClick={() => router.push("/juegos")}
+        style={{ width: '100%', marginTop: 10 }}
+        onClick={() => router.push('/juegos')}
       >
         JUGAR COMO INVITADO
       </button>
@@ -95,10 +79,10 @@ export default function AuthForm() {
       <div
         style={{
           marginTop: 18,
-          textAlign: "center",
+          textAlign: 'center',
           fontSize: 11,
-          color: "var(--ink-faint)",
-          letterSpacing: "0.1em",
+          color: 'var(--ink-faint)',
+          letterSpacing: '0.1em',
         }}
       >
         AL ENTRAR ACEPTAS LOS TÉRMINOS DEL SALÓN ARCADE

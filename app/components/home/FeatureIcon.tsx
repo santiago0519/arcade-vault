@@ -1,10 +1,10 @@
-import type { FeatureIconKind } from "@/app/data/home";
+import type { FeatureIconKind } from '@/app/data/home';
 
 // Iconos pixel 16x16 hechos con <rect>; el brillo sale del color del padre
 export default function FeatureIcon({ kind }: { kind: FeatureIconKind }) {
-  const C = "currentColor";
+  const C = 'currentColor';
 
-  if (kind === "GAMEPAD")
+  if (kind === 'GAMEPAD')
     return (
       <svg className="ft-icon" viewBox="0 0 16 16" aria-hidden="true">
         <g fill={C}>
@@ -19,7 +19,7 @@ export default function FeatureIcon({ kind }: { kind: FeatureIconKind }) {
       </svg>
     );
 
-  if (kind === "FREE")
+  if (kind === 'FREE')
     return (
       <svg className="ft-icon" viewBox="0 0 16 16" aria-hidden="true">
         <g fill={C}>
@@ -32,7 +32,7 @@ export default function FeatureIcon({ kind }: { kind: FeatureIconKind }) {
       </svg>
     );
 
-  if (kind === "TROPHY")
+  if (kind === 'TROPHY')
     return (
       <svg className="ft-icon" viewBox="0 0 16 16" aria-hidden="true">
         <g fill={C}>

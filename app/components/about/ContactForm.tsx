@@ -1,18 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
-import {
-  CONTACT_LIMITS,
-  validateContact,
-  type ContactResponse,
-} from "@/app/lib/contact";
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { CONTACT_LIMITS, validateContact, type ContactResponse } from '@/app/lib/contact';
 
-const EMPTY = { name: "", email: "", msg: "" };
-const GENERIC_ERROR = "No se pudo enviar el mensaje. Inténtalo de nuevo.";
+const EMPTY = { name: '', email: '', msg: '' };
+const GENERIC_ERROR = 'No se pudo enviar el mensaje. Inténtalo de nuevo.';
 
 export default function ContactForm() {
   const [form, setForm] = useState(EMPTY);
-  const [website, setWebsite] = useState(""); // honeypot
+  const [website, setWebsite] = useState(''); // honeypot
   const [sent, setSent] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,12 +42,7 @@ export default function ContactForm() {
     if (!result.ok || !result.data) {
       // Campo vacío: solo vibra. Correo o longitud inválidos: además se explica
       setError(
-        empty
-          ? null
-          : (result.errors.name ??
-              result.errors.email ??
-              result.errors.message ??
-              null),
+        empty ? null : (result.errors.name ?? result.errors.email ?? result.errors.message ?? null),
       );
       vibrate();
       return;
@@ -61,9 +52,9 @@ export default function ContactForm() {
     setSending(true);
     setError(null);
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...result.data, website }),
       });
       const body = (await res.json().catch(() => null)) as ContactResponse | null;
@@ -83,7 +74,7 @@ export default function ContactForm() {
   const reset = () => {
     setSent(null);
     setForm(EMPTY);
-    setWebsite("");
+    setWebsite('');
     setError(null);
   };
 
@@ -93,8 +84,8 @@ export default function ContactForm() {
         <div className="kicker pixel neon-cyan">▸ CONTACTO</div>
         <h2 className="contact-title">CONTÁCTANOS</h2>
         <p className="contact-sub">
-          ¿Tienes alguna sugerencia, quieres proponer un juego, o simplemente
-          quieres saludar? Escríbenos.
+          ¿Tienes alguna sugerencia, quieres proponer un juego, o simplemente quieres saludar?
+          Escríbenos.
         </p>
         <div className="contact-tips">
           <div className="tip">
@@ -109,11 +100,7 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <form
-        className={"contact-form" + (shake ? " shake" : "")}
-        onSubmit={onSubmit}
-        noValidate
-      >
+      <form className={'contact-form' + (shake ? ' shake' : '')} onSubmit={onSubmit} noValidate>
         {!sent ? (
           <>
             <div className="field">
@@ -176,10 +163,10 @@ export default function ContactForm() {
             <button
               className="btn xl press"
               type="submit"
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
               disabled={sending}
             >
-              {sending ? "ENVIANDO…" : "▶  ENVIAR MENSAJE"}
+              {sending ? 'ENVIANDO…' : '▶  ENVIAR MENSAJE'}
             </button>
           </>
         ) : (
@@ -192,15 +179,14 @@ export default function ContactForm() {
             </div>
             <div className="term-body">
               <div className="line">
-                <span className="prompt">vault@arcade:~$</span> ./send_message
-                --to=team
+                <span className="prompt">vault@arcade:~$</span> ./send_message --to=team
               </div>
               <div className="line dim">[OK] Conectando con servidor…</div>
               <div className="line dim">[OK] Validando contenido…</div>
               <div className="line dim">[OK] Transmitiendo paquete…</div>
               <div className="line success" role="status">
-                &gt; MENSAJE RECIBIDO. TE RESPONDEREMOS PRONTO. GRACIAS,{" "}
-                {sent.toUpperCase()}.<span className="caret">_</span>
+                &gt; MENSAJE RECIBIDO. TE RESPONDEREMOS PRONTO. GRACIAS, {sent.toUpperCase()}.
+                <span className="caret">_</span>
               </div>
               <div style={{ marginTop: 18 }}>
                 <button className="btn ghost" type="button" onClick={reset}>

@@ -48,24 +48,24 @@ Los datos viven en `app/data/` y son mock tipado. No hay base de datos.
 
 ```ts
 // app/data/games.ts
-export type Category = "ARCADE" | "PUZZLE" | "SHOOTER" | "VERSUS";
-export type GameColor = "cyan" | "magenta" | "yellow" | "green";
+export type Category = 'ARCADE' | 'PUZZLE' | 'SHOOTER' | 'VERSUS';
+export type GameColor = 'cyan' | 'magenta' | 'yellow' | 'green';
 
 export interface Game {
-  id: string;        // slug de la URL: "bloque-buster"
-  title: string;     // "BLOQUE BUSTER"
-  short: string;     // descripción de la tarjeta
-  long: string;      // descripción del detalle
+  id: string; // slug de la URL: "bloque-buster"
+  title: string; // "BLOQUE BUSTER"
+  short: string; // descripción de la tarjeta
+  long: string; // descripción del detalle
   cat: Category;
-  cover: string;     // clase CSS: "cover-bricks", "cover-tetro", ...
-  color: GameColor;  // color del botón JUGAR en la tarjeta
-  best: number;      // mejor puntuación global
-  plays: string;     // "12.4K"
+  cover: string; // clase CSS: "cover-bricks", "cover-tetro", ...
+  color: GameColor; // color del botón JUGAR en la tarjeta
+  best: number; // mejor puntuación global
+  plays: string; // "12.4K"
 }
 
-export const GAMES: Game[];                       // los 8 juegos de data.jsx
-export const CATS: ("TODOS" | Category)[];        // filtros de la biblioteca
-export const PLAYERS: string[];                   // nombres para el generador
+export const GAMES: Game[]; // los 8 juegos de data.jsx
+export const CATS: ('TODOS' | Category)[]; // filtros de la biblioteca
+export const PLAYERS: string[]; // nombres para el generador
 ```
 
 ```ts
@@ -83,25 +83,25 @@ export function seededScores(seed: number, count?: number): ScoreRow[]; // deter
 ```ts
 // app/lib/scores-storage.ts — única escritura a localStorage
 export interface SavedScore {
-  game: string;  // Game["id"]
+  game: string; // Game["id"]
   score: number;
-  name: string;  // iniciales, máx. 10 caracteres, en mayúsculas
-  at: number;    // Date.now()
+  name: string; // iniciales, máx. 10 caracteres, en mayúsculas
+  at: number; // Date.now()
 }
 
-export const SCORES_KEY = "av_scores"; // valor: JSON de SavedScore[]
-export function saveScore(entry: Omit<SavedScore, "at">): void; // lee, añade y reescribe; try/catch silencioso
+export const SCORES_KEY = 'av_scores'; // valor: JSON de SavedScore[]
+export function saveScore(entry: Omit<SavedScore, 'at'>): void; // lee, añade y reescribe; try/catch silencioso
 ```
 
 Rutas:
 
-| Pantalla    | Ruta                 | Tipo de componente de página                                  |
-| ----------- | -------------------- | ------------------------------------------------------------- |
-| Biblioteca  | `/`                  | Server; el filtro es un componente cliente hijo               |
-| Detalle     | `/juegos/[id]`       | Server; `notFound()` si el id no existe                       |
-| Reproductor | `/juegos/[id]/jugar` | Server; el HUD y el modal son un componente cliente hijo      |
-| Acceso      | `/acceso`            | Server; el formulario es un componente cliente hijo           |
-| Salón       | `/salon`             | Server; las tabs son un componente cliente hijo               |
+| Pantalla    | Ruta                 | Tipo de componente de página                             |
+| ----------- | -------------------- | -------------------------------------------------------- |
+| Biblioteca  | `/`                  | Server; el filtro es un componente cliente hijo          |
+| Detalle     | `/juegos/[id]`       | Server; `notFound()` si el id no existe                  |
+| Reproductor | `/juegos/[id]/jugar` | Server; el HUD y el modal son un componente cliente hijo |
+| Acceso      | `/acceso`            | Server; el formulario es un componente cliente hijo      |
+| Salón       | `/salon`             | Server; las tabs son un componente cliente hijo          |
 
 Convenciones:
 
@@ -175,11 +175,11 @@ Antes de empezar, leer `node_modules/next/dist/docs/` (`01-app`) sobre `cacheCom
 
 | Riesgo                                                                                   | Mitigación                                                                                                  |
 | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `cacheComponents: true` rompe páginas con `params` o datos dinámicos sin `Suspense`.      | Usar `generateStaticParams` en `/juegos/[id]` y leer la guía de Next 16 antes del paso 4.                   |
+| `cacheComponents: true` rompe páginas con `params` o datos dinámicos sin `Suspense`.     | Usar `generateStaticParams` en `/juegos/[id]` y leer la guía de Next 16 antes del paso 4.                   |
 | `Math.random` en el reproductor genera diferencias entre servidor y cliente al hidratar. | La puntuación empieza en 0 y solo cambia dentro de `useEffect`; nada aleatorio se renderiza en el servidor. |
 | `localStorage` bloqueado, lleno o con JSON corrupto en `av_scores`.                      | `saveScore` envuelve lectura y escritura en `try/catch`; si el JSON es inválido, parte de un arreglo vacío. |
 | Faltan clases de `styles.css` en `app/globals.css`.                                      | El paso 8 compara contra la plantilla y porta lo que falte.                                                 |
-| Las fuentes `next/font` cambian los nombres de variable respecto al prototipo.           | Verificar visualmente que `--pixel` y `--mono` resuelven a las fuentes de `layout.tsx`.                      |
+| Las fuentes `next/font` cambian los nombres de variable respecto al prototipo.           | Verificar visualmente que `--pixel` y `--mono` resuelven a las fuentes de `layout.tsx`.                     |
 
 ---
 
