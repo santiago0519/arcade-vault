@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from 'react';
 import { saveScore } from '@/app/lib/scores-storage';
 import {
   ASTEROIDS_HEIGHT,
@@ -27,7 +27,27 @@ function isEditableTarget(target: EventTarget | null): boolean {
 function blurTarget(e: MouseEvent<HTMLElement>) {
   e.currentTarget.blur();
 }
+// Dispositivo sin puntero fino (móvil/tablet táctil): el juego solo se controla con teclado.
+const COARSE_QUERY = '(pointer: coarse)';
+const ANY_FINE_QUERY = '(any-pointer: fine)';
+function subscribePointer(onChange: () => void) {
+  const queries = [window.matchMedia(COARSE_QUERY), window.matchMedia(ANY_FINE_QUERY)];
+  queries.forEach((q) => q.addEventListener('change', onChange));
+  return () => queries.forEach((q) => q.removeEventListener('change', onChange));
+}
+function getNeedsKeyboard() {
+  return window.matchMedia(COARSE_QUERY).matches && !window.matchMedia(ANY_FINE_QUERY).matches;
+}
+// En el servidor no se sabe: no se muestra el aviso hasta hidratar.
+function getNeedsKeyboardServer() {
+  return false;
+}
 export default function AsteroidsPlayer({ title }: { title: string }) {
+  const needsKeyboard = useSyncExternalStore(
+    subscribePointer,
+    getNeedsKeyboard,
+    getNeedsKeyboardServer,
+  );
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<AsteroidsEngine | null>(null);
   const [snap, setSnap] = useState<AsteroidsSnapshot>(INITIAL_SNAPSHOT);
@@ -90,7 +110,7 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
     engineRef.current?.restart();
   };
   return (
-    <div className="av-player fade-in">
+    <div className="av-player av-asteroids fade-in">
       <div className="player-hud">
         <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
           <div className="hud-stat">
@@ -140,6 +160,20 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
           </Link>
         </div>
       </div>
+      {needsKeyboard && (
+        <div className="av-asteroids-kbd" role="status">
+          <span className="ico" aria-hidden="true">
+            ⌨
+          </span>
+          <div>
+            <div className="t">REQUIERE TECLADO</div>
+            <div className="d">
+              Se juega con ← → para rotar, ↑ para propulsar y ESPACIO para disparar. Conecta un
+              teclado físico para jugar.
+            </div>
+          </div>
+        </div>
+      )}
       <div className="crt">
         <div className="crt-screen">
           <canvas
@@ -147,7 +181,7 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
             width={ASTEROIDS_WIDTH}
             height={ASTEROIDS_HEIGHT}
             aria-label="Asteroides: usa las flechas para rotar y propulsar, y Espacio para disparar"
-            style={{ display: 'block', width: '100%', height: '100%' }}
+            className="av-asteroids-canvas"
           />
           {paused && (
             <div className="crt-content" style={{ background: 'rgba(0,0,0,0.6)', zIndex: 5 }}>
