@@ -3026,4 +3026,38 @@
     line-height: 1.6;
     color: var(--ink-dim);
   }
+  /* ===== salón de la fama con datos reales (SPEC 07) ===== */
+  /* Cada puesto fija su columna para que el podio no se descoloque
+     cuando faltan puestos (p. ej. solo hay campeón). */
+  @media (min-width: 721px) {
+    .podium-slot.silver {
+      grid-column: 1;
+    }
+    .podium-slot.gold {
+      grid-column: 2;
+    }
+    .podium-slot.bronze {
+      grid-column: 3;
+    }
+  }
+  .hall-tabs .chip {
+    text-decoration: none;
+  }
+  .skel-podium {
+    min-height: 120px;
+    animation: skel-pulse 1.4s steps(3) infinite;
+  }
+  .skel-podium.gold {
+    min-height: 160px;
+    box-shadow: none;
+  }
+  .hall-table .tr.skel-row {
+    opacity: 1;
+    animation: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .skel-podium {
+      animation: none;
+    }
+  }
 }
