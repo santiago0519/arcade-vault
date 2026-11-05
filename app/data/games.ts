@@ -8,10 +8,9 @@ export interface Game {
   cat: Category;
   cover: string;
   color: GameColor;
-  best: number;
-  plays: string;
 }
-export const GAMES: Game[] = [
+// Temporal (SPEC 07): se elimina en el paso 10, cuando todo lee de Supabase.
+export const GAMES: (Game & { best: number; plays: string })[] = [
   {
     id: 'asteroides',
     title: 'ASTEROIDES',
