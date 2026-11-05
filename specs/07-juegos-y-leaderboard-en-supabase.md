@@ -1,6 +1,6 @@
 # SPEC 07 — Catálogo de juegos y leaderboard en Supabase
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 05, SPEC 06
 > **Date:** 2026-11-04
 > **Objective:** Crear en Supabase las tablas `games` (con semilla de `asteroides`) y `scores`, y hacer que el catálogo, el detalle, la Home y `/salon` las lean en cada petición, y que Asteroides guarde ahí sus puntuaciones en lugar de `localStorage`.
