@@ -846,10 +846,21 @@
     }
   }
   .detail-cover {
+    display: block;
     aspect-ratio: 16 / 10;
     position: relative;
     border: 1px solid var(--line);
     overflow: hidden;
+    cursor: pointer;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .detail-cover:hover,
+  .detail-cover:focus-visible {
+    border-color: var(--cyan);
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+    outline: none;
   }
   .detail-info {
     display: flex;
