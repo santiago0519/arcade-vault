@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from 'react';
-import { saveScore } from '@/app/lib/scores-storage';
+import { loadPlayerName, normalizePlayerName, savePlayerName } from '@/app/lib/player-name';
+import { insertScore } from '@/app/lib/scores';
 import {
   ASTEROIDS_HEIGHT,
   ASTEROIDS_WIDTH,
@@ -17,6 +18,8 @@ const INITIAL_SNAPSHOT: AsteroidsSnapshot = {
   state: 'playing',
   paused: false,
 };
+// Estados del guardado en Supabase desde el modal de fin de partida.
+type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 function isEditableTarget(target: EventTarget | null): boolean {
   if (!(target instanceof HTMLElement)) return false;
   if (target.isContentEditable) return true;
@@ -51,11 +54,13 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<AsteroidsEngine | null>(null);
   const [snap, setSnap] = useState<AsteroidsSnapshot>(INITIAL_SNAPSHOT);
-  const [name, setName] = useState('INVITADO');
+  const [name, setName] = useState('');
   // Fin de partida: lo abre el motor (última vida perdida o end()) con la puntuación real.
   const [over, setOver] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
-  const [saved, setSaved] = useState(false);
+  const [saveState, setSaveState] = useState<SaveState>('idle');
+  // Bloqueo síncrono: un doble clic no debe lanzar dos inserts.
+  const savingRef = useRef(false);
   // El motor se crea al montar y se destruye al desmontar (navegación, Strict Mode),
   // así no quedan listeners de window ni loops de requestAnimationFrame duplicados.
   useEffect(() => {
@@ -67,7 +72,9 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
       onChange: setSnap,
       onGameOver: (score) => {
         setFinalScore(score);
-        setSaved(false);
+        setSaveState('idle');
+        // Precarga el último nombre guardado con éxito, si existe.
+        setName((prev) => loadPlayerName() ?? prev);
         setOver(true);
       },
     });
@@ -99,14 +106,27 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
     blurTarget(e);
     engineRef.current?.end();
   };
-  const save = () => {
-    saveScore({ game: 'asteroides', score: finalScore, name });
-    setSaved(true);
+  const save = async () => {
+    if (savingRef.current || saveState === 'saved') return;
+    savingRef.current = true;
+    setSaveState('saving');
+    const playerName = normalizePlayerName(name);
+    try {
+      await insertScore({ gameId: 'asteroides', playerName, score: finalScore });
+      savePlayerName(playerName);
+      setName(playerName);
+      setSaveState('saved');
+    } catch (error) {
+      console.error(error);
+      setSaveState('error');
+    } finally {
+      savingRef.current = false;
+    }
   };
   const playAgain = (e: MouseEvent<HTMLButtonElement>) => {
     blurTarget(e);
     setOver(false);
-    setSaved(false);
+    setSaveState('idle');
     engineRef.current?.restart();
   };
   return (
@@ -116,7 +136,7 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
           <div className="hud-stat">
             <div className="l">Jugador</div>
             <div className="v" style={{ color: 'var(--ink)' }}>
-              {name}
+              {normalizePlayerName(name)}
             </div>
           </div>
           <div className="hud-stat">
@@ -216,21 +236,39 @@ export default function AsteroidsPlayer({ title }: { title: string }) {
             <h2 id="asteroides-fin">FIN DEL JUEGO</h2>
             <div className="final-label">PUNTUACIÓN FINAL</div>
             <div className="final">{finalScore.toLocaleString('es-ES')}</div>
-            {!saved ? (
-              <div className="input-row">
-                <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value.toUpperCase().slice(0, 10))}
-                  placeholder="TUS INICIALES"
-                  aria-label="Tus iniciales"
-                  autoFocus
-                />
-                <button type="button" className="btn yellow" onClick={save}>
-                  GUARDAR PUNTUACIÓN
-                </button>
-              </div>
+            {saveState !== 'saved' ? (
+              <>
+                <div className="input-row">
+                  <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value.toUpperCase().slice(0, 10))}
+                    maxLength={10}
+                    placeholder="TU NOMBRE"
+                    aria-label="Tu nombre"
+                    disabled={saveState === 'saving'}
+                    autoFocus
+                  />
+                  <button
+                    type="button"
+                    className="btn yellow"
+                    onClick={save}
+                    disabled={saveState === 'saving'}
+                    aria-busy={saveState === 'saving'}
+                  >
+                    {saveState === 'saving' ? 'GUARDANDO…' : 'GUARDAR PUNTUACIÓN'}
+                  </button>
+                </div>
+                {saveState === 'error' && (
+                  <div className="save-error" role="alert">
+                    <div className="t pixel">NO SE PUDO GUARDAR</div>
+                    <div className="d">Revisa tu conexión y pulsa GUARDAR PUNTUACIÓN otra vez.</div>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="toast-saved">▸ PUNTUACIÓN GUARDADA_</div>
+              <div className="toast-saved" role="status">
+                ▸ PUNTUACIÓN GUARDADA_
+              </div>
             )}
             <div className="actions">
               <button type="button" className="btn" onClick={playAgain}>

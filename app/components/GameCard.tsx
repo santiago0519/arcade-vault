@@ -1,12 +1,9 @@
 'use client';
-
 import Link from 'next/link';
 import { useRef } from 'react';
 import type { Game } from '@/app/data/games';
-
 export default function GameCard({ game }: { game: Game }) {
   const tiltRef = useRef<HTMLAnchorElement>(null);
-
   const onMove = (e: React.MouseEvent) => {
     const el = tiltRef.current;
     if (!el) return;
@@ -15,13 +12,11 @@ export default function GameCard({ game }: { game: Game }) {
     const py = (e.clientY - r.top) / r.height - 0.5;
     el.style.transform = `translateY(-6px) rotateX(${-py * 6}deg) rotateY(${px * 8}deg)`;
   };
-
   const onLeave = () => {
     const el = tiltRef.current;
     if (!el) return;
     el.style.transform = '';
   };
-
   return (
     <Link
       ref={tiltRef}
@@ -38,10 +33,6 @@ export default function GameCard({ game }: { game: Game }) {
         <div className="title">{game.title}</div>
         <div className="desc">{game.short}</div>
         <div className="row">
-          <div className="score-badge">
-            <span>MEJOR PUNTUACIÓN</span>
-            <b>{game.best.toLocaleString('es-ES')}</b>
-          </div>
           <span
             className={
               'btn ' +
